@@ -8,10 +8,10 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type CoursesRepositoryNameQueryVariables = {|
+export type CourseseQueryVariables = {|
   id?: ?string
 |};
-export type CoursesRepositoryNameQueryResponse = {|
+export type CourseseQueryResponse = {|
   +user: ?{|
     +id: string,
     +name: ?string,
@@ -21,20 +21,21 @@ export type CoursesRepositoryNameQueryResponse = {|
         +node: ?{|
           +id: string,
           +title: ?string,
+          +body: ?string,
         |}
       |}>
     |},
   |}
 |};
-export type CoursesRepositoryNameQuery = {|
-  variables: CoursesRepositoryNameQueryVariables,
-  response: CoursesRepositoryNameQueryResponse,
+export type CourseseQuery = {|
+  variables: CourseseQueryVariables,
+  response: CourseseQueryResponse,
 |};
 */
 
 
 /*
-query CoursesRepositoryNameQuery(
+query CourseseQuery(
   $id: String
 ) {
   user(id: $id) {
@@ -46,6 +47,7 @@ query CoursesRepositoryNameQuery(
         node {
           id
           title
+          body
         }
       }
     }
@@ -129,6 +131,13 @@ v2 = [
                     "kind": "ScalarField",
                     "name": "title",
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "body",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -148,7 +157,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CoursesRepositoryNameQuery",
+    "name": "CourseseQuery",
     "selections": (v2/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -157,20 +166,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CoursesRepositoryNameQuery",
+    "name": "CourseseQuery",
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "f751fffc8b9f5681c5c4e95e594da234",
+    "cacheID": "cdf8b78cdd52ad9b89166fe8693feb86",
     "id": null,
     "metadata": {},
-    "name": "CoursesRepositoryNameQuery",
+    "name": "CourseseQuery",
     "operationKind": "query",
-    "text": "query CoursesRepositoryNameQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    name\n    email\n    courses {\n      edges {\n        node {\n          id\n          title\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query CourseseQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    name\n    email\n    courses {\n      edges {\n        node {\n          id\n          title\n          body\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '7e7843018295c85103ab84454aa35766';
+(node/*: any*/).hash = '4bb28d5859dd2a344f4ee798bedbf956';
 
 module.exports = node;

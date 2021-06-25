@@ -1,6 +1,4 @@
 async function fetchGraphQL(text: string, variables: any) {
-
-  // Fetch data from GitHub's GraphQL API:
   return fetch('http://10.0.2.2:3001/graphql', {
     method: 'POST',
     headers: {

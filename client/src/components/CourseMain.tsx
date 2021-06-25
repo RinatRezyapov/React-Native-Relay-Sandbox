@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import {usePreloadedQuery} from 'react-relay/hooks';
 import {CourseQuery} from '../pages/Course';
+import colors from '../theme/colors';
 
 function CourseMain(props: any) {
   const [background, setBackground] = useState<'initial' | 'success' | 'error'>('initial');
@@ -27,7 +28,6 @@ function CourseMain(props: any) {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      console.log(wordsArray)
       if (pause) {
         return;
       }
@@ -58,7 +58,7 @@ function CourseMain(props: any) {
   }
 
   const onUserInputSubmit = () => {
-    if (userInput === currentPhrase) {
+    if (userInput.toLowerCase() === currentPhrase.toLowerCase()) {
       setBackground('success');
       setUserInput('');
       setPause(false);
@@ -73,11 +73,13 @@ function CourseMain(props: any) {
 
   return (
     <View style={{...styles.background, ...getBackgroundColorStyle()}}>
-        <Text style={styles.phrase}>{phraseVisibility && currentPhrase}</Text>
-        {background !== 'initial' && <Text style={styles.phrase}>{currentPhrase}</Text>}
+        <Text style={styles.phrase}>
+          {phraseVisibility && currentPhrase}
+        </Text>
+        {background !== 'initial' && <Text style={styles.phraseResult}>{currentPhrase}</Text>}
         {background === 'initial' && <View style={styles.controlsContainer}>
           <TextInput style={styles.input} value={userInput} onChangeText={onUserInputChange} />
-          <Button color='#3EB489' title='Submit' onPress={onUserInputSubmit} />
+          <Button color={colors.primary} title='Submit' onPress={onUserInputSubmit} />
         </View>}
     </View>
   );
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   backgroundColorInitial: {
-    backgroundColor: '#b2dfdb',
+    backgroundColor: '#ffffff',
   },
   backgroundColorSuccess: {
     backgroundColor: '#81c784',
@@ -102,13 +104,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 32,
     fontWeight: '800',
+    color: colors.primary
+  },
+  phraseResult: {
+    textAlign: 'center',
+    fontSize: 32,
+    fontWeight: '800',
     color: '#ffffff'
   },
   input: {
     borderStyle: 'solid',
     borderWidth: 1,
     borderRadius: 4,
-    borderColor: '#3EB489',
+    borderColor: colors.primary,
+    textAlign: 'center',
     padding: 16,
     marginTop: 32,
     marginBottom: 32,

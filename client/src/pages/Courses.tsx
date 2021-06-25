@@ -11,8 +11,8 @@ import { Text } from 'react-native';
 import CoursesList from '../components/CoursesList';
 import RelayEnvironment from '../RelayEnvironment';
 
-export const RepositoryNameQuery = graphql`
-  query CoursesRepositoryNameQuery($id: String) {
+export const CoursesQuery = graphql`
+  query CourseseQuery($id: String) {
     user(id: $id) {
       id,
       name, 
@@ -21,7 +21,8 @@ export const RepositoryNameQuery = graphql`
         edges {
           node {
             id,
-            title
+            title,
+            body
           }
         }
       }
@@ -29,7 +30,7 @@ export const RepositoryNameQuery = graphql`
   }
 `;
 
-const preloadedQuery = loadQuery(RelayEnvironment, RepositoryNameQuery, {
+const preloadedQuery = loadQuery(RelayEnvironment, CoursesQuery, {
   id: "1",
 });
 
