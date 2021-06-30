@@ -23,18 +23,16 @@ const GraphQLUser = new GraphQLObjectType({
     id: globalIdField('User'),
     name: {
       type: GraphQLString,
-      resolve: ({ id }) => {
-        return users.filter(v => v.id === id)?.[0]?.name || 'Name is undefined'
-      }
+      resolve: (user) => user.name
     },
     email: {
       type: GraphQLString,
-      resolve: ({ id }) => users.filter(v => v.id === id)?.[0]?.email 
+      resolve: (user) => user.email
     },
     courses: {
       type: CoursesConnection,
-      resolve: ({id}, {after, before, first, last}) => {
-        return connectionFromArray([...getCourses(id)], {after, before, first, last})
+      resolve: (user, {after, before, first, last}) => {
+        return connectionFromArray([...user.courses], {after, before, first, last})
       }
     }
   },
@@ -47,7 +45,22 @@ const UserQuery = {
     id: { type: GraphQLString },
   },
   resolve: (root, { id }) => {
-    return users.filter(v => v.id === id)[0]
+    const Pool = require('pg').Pool
+    const pool = new Pool({
+      user: 'postgres',
+      host: 'localhost',
+      database: 'recognize',
+      password: 'admin',
+      port: 5432,
+    })
+
+    return  pool.query('SELECT * FROM users ORDER BY id ASC').then(response => {
+      const user = response.rows.filter(row => row.id.toString() === id)[0];
+      return ({
+        ...user,
+        courses: getCourses(id)
+      })
+    });
   }
 }
 

@@ -5,8 +5,6 @@ import { graphqlHTTP } from 'express-graphql';
 
 const SERVER_PORT = 3001;
 
-
-
 const app = express()
   .use(cors())
   .use('/graphql', graphqlHTTP({
