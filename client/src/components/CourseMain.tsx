@@ -3,6 +3,7 @@ import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import {usePreloadedQuery} from 'react-relay/hooks';
 import {CourseQuery} from '../pages/Course';
 import colors from '../theme/colors';
+import { splitString } from '../utils/courses';
 
 function CourseMain(props: any) {
   const [background, setBackground] = useState<'initial' | 'success' | 'error'>('initial');
@@ -17,13 +18,9 @@ function CourseMain(props: any) {
   const getRandomInt = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min)) + min;
   }
-  
+ console.log(data)
   const wordsArray = useMemo(() => {
-    return data.node.body
-      .replace(/[^\w\s]|_/g, '')
-      .replace(/\s+/g, ' ')
-      .toLowerCase()
-      .split(' ');
+    return splitString(data?.node?.body || '');
   }, [data]);
 
   useEffect(() => {

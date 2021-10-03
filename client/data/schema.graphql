@@ -8,12 +8,18 @@ type Query {
   ): Node
 }
 
-type User {
+type User implements Node {
   """The ID of an object"""
   id: ID!
   name: String
   email: String
   courses: CourseConnection
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
 }
 
 """A connection to a list of items."""
@@ -52,14 +58,8 @@ type CourseEdge {
 type Course implements Node {
   """The ID of an object"""
   id: ID!
-  authorId: String
+  authorid: String
   title: String
   body: String
   created: Int
-}
-
-"""An object with an ID"""
-interface Node {
-  """The id of the object."""
-  id: ID!
 }

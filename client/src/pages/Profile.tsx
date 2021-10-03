@@ -9,41 +9,33 @@ import { Text } from 'react-native';
 } from "react-relay/hooks";
 
 import CoursesList from '../components/CoursesList';
+import ProfileComponent from '../components/ProfileComponent';
 import RelayEnvironment from '../RelayEnvironment';
 
-export const CoursesQuery = graphql`
-  query CourseseQuery($id: String) {
+export const ProfileQuery = graphql`
+  query ProfileQuery($id: String) {
     user(id: $id) {
       id,
       name, 
       email,
-      courses {
-        edges {
-          node {
-            id,
-            title,
-            body
-          }
-        }
-      }
     }
   }
 `;
 
-const preloadedQuery = loadQuery(RelayEnvironment, CoursesQuery, {
+const preloadedQuery = loadQuery(RelayEnvironment, ProfileQuery, {
   id: "3",
 });
 
-const Courses: React.FC<any> = (props) => {
+const Profile: React.FC<any> = (props) => {
 
 
   return (
      <RelayEnvironmentProvider environment={RelayEnvironment}>
       <React.Suspense fallback={<Text>Loading...</Text>}>
-        <CoursesList preloadedQuery={preloadedQuery} navigation={props.navigation} />
+        <ProfileComponent preloadedQuery={preloadedQuery} navigation={props.navigation} />
       </React.Suspense>
     </RelayEnvironmentProvider>
   )
 };
 
-export default Courses;
+export default Profile;
